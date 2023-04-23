@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>WASM Proxy</title>
+  <script>
+    async function fetchAndEncodeWasm() {
+      const wasmResponse = await fetch('de.wasm');
+      const wasmArrayBuffer = await wasmResponse.arrayBuffer();
+      const wasmUint8Array = new Uint8Array(wasmArrayBuffer);
+      const wasmBase64 = btoa(String.fromCharCode.apply(null, wasmUint8Array));
+      return wasmBase64;
+    }
+
+    fetchAndEncodeWasm()
+      .then(encodedWasm => {
+        document.getElementById('encodedWasm').textContent = encodedWasm;
+      });
+  </script>
+</head>
+<body>
+  <pre id="encodedWasm"></pre>
+</body>
+</html>
